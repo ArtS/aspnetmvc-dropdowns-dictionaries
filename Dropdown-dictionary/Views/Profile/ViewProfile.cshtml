@@ -1,0 +1,29 @@
+﻿@model Dropdowns.Models.UserProfileModel
+@{
+    ViewBag.Title = String.Format("Welcome, {0} {1}", Model.FirstName, Model.LastName);
+}
+
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        
+        <h2>Welcome, @Model.FirstName @Model.LastName</h2>
+
+        <div class="panel panel-default">
+            <div class="panel-body">              
+
+                <p>Your profile details</p>
+
+                <dl>
+                    <dt>Name</dt>
+                    <dd>@Model.FirstName @Model.LastName</dd>
+
+                    <dt>Industry</dt>
+                    <dd>@Model.Industry</dd>
+                    
+                    <dt><a href="@Url.Action("UserProfile")">Edit profile</a></dt>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+

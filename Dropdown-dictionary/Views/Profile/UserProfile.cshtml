@@ -1,0 +1,40 @@
+﻿@model Dropdowns.Models.UserProfileModel
+
+@{ ViewBag.Title = "Your profile"; }
+
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+
+        <h1>Your profile</h1>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @using (Html.BeginForm("UserProfile", "Profile", FormMethod.Post, new { role = "form" })) {
+
+                    @* First Name textbox *@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName)
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+                    
+                    @* Last Name textbox *@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName)
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+
+                    @* Industry selection dropdown *@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Industry)
+                        @Html.DropDownListFor(m => m.Industry, // Store selected value in Model.Industry
+                                              Model.Industries, // Take list of values from Model.Industries
+                                              "- Please select your industry -", // Text for the first 'default' option
+                                              new { @class = "form-control" }) @* A class name to assign to "select" tag *@
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
