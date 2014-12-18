@@ -57,7 +57,7 @@ namespace Dropdowns.Controllers
 
             // Get a description of the currently selected industry from the
             // [Display] attribute of the Industry enum
-            model.IndustryName = GetIndustryName(model.Industry);
+            model.IndustryName = GetIndustryName(model.title);
 
             // Or uncomment to use the generic implementation
             // model.IndustryName = GetEnumDisplayName(model.Industry);

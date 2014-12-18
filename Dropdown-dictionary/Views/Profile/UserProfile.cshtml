@@ -25,8 +25,8 @@
 
                     @* Industry selection dropdown *@
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Industry)
-                        @Html.DropDownListFor(m => m.Industry, // Store selected value in Model.Industry
+                        @Html.LabelFor(m => m.title)
+                        @Html.DropDownListFor(m => m.title, // Store selected value in Model.Industry
                                               Model.Industries, // Take list of values from Model.Industries
                                               "- Please select your industry -", // Text for the first 'default' option
                                               new { @class = "form-control" }) @* A class name to assign to "select" tag *@

@@ -17,7 +17,7 @@ namespace Dropdowns.Models
         // This property holds user-selected industry
         [Required]
         [Display(Name = "Industry")]
-        public Industry Industry { get; set; }
+        public Industry title { get; set; }
 
         // This property holds all available industries for selection
         public IEnumerable<SelectListItem> Industries { get; set; }
