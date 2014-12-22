@@ -14,15 +14,15 @@ namespace Dropdowns.Models
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        // This property holds user-selected industry
+        // This property holds user-selected state
         [Required]
-        [Display(Name = "Industry")]
-        public Industry title { get; set; }
+        [Display(Name = "State")]
+        public string State { get; set; }
 
-        // This property holds all available industries for selection
-        public IEnumerable<SelectListItem> Industries { get; set; }
+        // This property holds all available states for selection
+        public Dictionary<string, string> States { get; set; }
 
-        // This stored human-readable name of the industry
-        public string IndustryName { get; set; }
+        // Property to store human-readable state name
+        public string StateName { get; set; }
     }
 }

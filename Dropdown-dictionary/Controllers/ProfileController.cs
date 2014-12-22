@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Dropdowns.Models;
 
@@ -9,16 +7,16 @@ namespace Dropdowns.Controllers
     public class ProfileController : Controller
     {
         //
-        // 1. Action method for displaying a 'User Profile' page
+        // 1. Action method for displaying the 'User Profile' page
         //
         public ActionResult UserProfile()
         {
             // Get existing user profile object from the session or create a new one
             var model = Session["UserProfileModel"] as UserProfileModel ?? new UserProfileModel();
 
-            // Create a list of SelectListItems from Industries so these can be rendered on the page
+            // Create a list of SelectListItems from States so these can be rendered on the page
             // under the drop down
-            model.Industries = GetSelectListItems();
+            model.States = GetStatesFromDB();
 
             return View(model);
         }
@@ -30,11 +28,11 @@ namespace Dropdowns.Controllers
         public ActionResult UserProfile(UserProfileModel model)
         {
             // Set these states on the model. We need to do this because
-            // only selected in the DropDownList value is posted back, not the whole
+            // only the value selected in the DropDownList is posted back, not the whole
             // list of states
-            model.Industries = GetSelectListItems();
+            model.States = GetStatesFromDB();
 
-            // In case everything is fine - i.e. both "FirstName" and "Industry" are entered/selected,
+            // In case everything is fine - i.e. both "FirstName" and "State" are entered/selected,
             // redirect user to the "ViewProfile" page, and pass the user object along via Session
             if (ModelState.IsValid)
             {
@@ -55,83 +53,74 @@ namespace Dropdowns.Controllers
             // Get user profile information from the session
             var model = Session["UserProfileModel"] as UserProfileModel;
 
-            // Get a description of the currently selected industry from the
-            // [Display] attribute of the Industry enum
-            model.IndustryName = GetIndustryName(model.title);
+            // Get a description of the currently selected State
+            var allStates = GetStatesFromDB();
+            model.StateName = allStates[model.State];
 
-            // Or uncomment to use the generic implementation
-            // model.IndustryName = GetEnumDisplayName(model.Industry);
-
-            // Display ViewProfile.html page that shows FirstName, Last Name and selected Industry.
+            // Display ViewProfile.html page that shows FirstName, Last Name and selected State.
             return View(model);
         }
 
         /// <summary>
-        /// Converts Industry enum to a list of SelectListItems
+        /// Simulates retrieval of country's states from a DB.
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<SelectListItem> GetSelectListItems()
+        private Dictionary<string, string> GetStatesFromDB()
         {
-            var selectList = new List<SelectListItem>();
-
-            // Get all values of the Industry enum
-            var enumValues = Enum.GetValues(typeof(Industry)) as Industry[];
-            if (enumValues == null)
-                return null;
-
-            foreach (var enumValue in enumValues)
+            return new Dictionary<string, string>
             {
-                // Create a new SelectListItem element and set its
-                // Value and Text to the enum value and description.
-                selectList.Add(new SelectListItem
-                {
-                    Value = enumValue.ToString(),
-                    Text = GetIndustryName(enumValue)
-                });
-            }
-
-            return selectList;
+                {"AK", "Alaska"},
+                {"AL", "Alabama"},
+                {"AR", "Arkansas"},
+                {"AZ", "Arizona"},
+                {"CA", "California"},
+                {"CO", "Colorado"},
+                {"CT", "Connecticut"},
+                {"DC", "District Of Columbia"},
+                {"DE", "Delaware"},
+                {"FL", "Florida"},
+                {"GA", "Georgia"},
+                {"HI", "Hawaii"},
+                {"IA", "Iowa"},
+                {"ID", "Idaho"},
+                {"IL", "Illinois"},
+                {"IN", "Indiana"},
+                {"KS", "Kansas"},
+                {"KY", "Kentucky"},
+                {"LA", "Louisiana"},
+                {"MA", "Massachusetts"},
+                {"MD", "Maryland"},
+                {"ME", "Maine"},
+                {"MI", "Michigan"},
+                {"MN", "Minnesota"},
+                {"MO", "Missouri"},
+                {"MS", "Mississippi"},
+                {"MT", "Montana"},
+                {"NC", "North Carolina"},
+                {"ND", "North Dakota"},
+                {"NE", "Nebraska"},
+                {"NH", "New Hampshire"},
+                {"NJ", "New Jersey"},
+                {"NM", "New Mexico"},
+                {"NV", "Nevada"},
+                {"NY", "New York"},
+                {"OH", "Ohio"},
+                {"OK", "Oklahoma"},
+                {"OR", "Oregon"},
+                {"PA", "Pennsylvania"},
+                {"RI", "Rhode Island"},
+                {"SC", "South Carolina"},
+                {"SD", "South Dakota"},
+                {"TN", "Tennessee"},
+                {"TX", "Texas"},
+                {"UT", "Utah"},
+                {"VA", "Virginia"},
+                {"VT", "Vermont"},
+                {"WA", "Washington"},
+                {"WI", "Wisconsin"},
+                {"WV", "West Virginia"},
+                {"WY", "Wyoming"}
+            };
         }
-
-        /// <summary>
-        /// So we can show nicely formatted text in the UI this function retrieves the
-        /// value from [Display(Name="Editorial & Writing")] attribute.
-        /// </summary>
-        /// <param name="value">Value from Industry enum</param>
-        /// <returns>Value of the "Name" property on Display attribute</returns>
-        private string GetIndustryName(Industry value)
-        {
-            // Get the MemberInfo object for the supplied enum value
-            var memberInfo = value.GetType().GetMember(value.ToString());
-            if (memberInfo.Length != 1)
-                return null;
-
-            // Get DisplayAttibute on the supplied enum value
-            var displayAttribute = memberInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false) as DisplayAttribute[];
-            if (displayAttribute == null || displayAttribute.Length != 1)
-                return null;
-
-            return displayAttribute[0].Name;
-        }
-
-        /// <summary>
-        /// Generic function that obtains value .Neme property of [Display] attribute
-        /// on a supplied enum value. Can be used with any enum, not just 'Industry'
-        /// in this example
-        /// </summary>
-	    private string GetEnumDisplayName<T>(T value) where T: struct
-	    {
-	        // Get the MemberInfo object for supplied enum value
-	        var memberInfo = value.GetType().GetMember(value.ToString());
-	        if (memberInfo.Length != 1)
-		    return null;
-
-	        // Get DisplayAttibute on the supplied enum value
-	        var displayAttribute = memberInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false) as DisplayAttribute[];
-	        if (displayAttribute == null || displayAttribute.Length != 1)
-		    return null;
-
-	        return displayAttribute[0].Name;
-	    }
     }
 }

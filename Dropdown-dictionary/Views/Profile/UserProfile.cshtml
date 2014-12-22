@@ -23,12 +23,17 @@
                         @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
                     </div>
 
-                    @* Industry selection dropdown *@
+                    @* State selection dropdown *@
                     <div class="form-group">
-                        @Html.LabelFor(m => m.title)
-                        @Html.DropDownListFor(m => m.title, // Store selected value in Model.Industry
-                                              Model.Industries, // Take list of values from Model.Industries
-                                              "- Please select your industry -", // Text for the first 'default' option
+                        @Html.LabelFor(m => m.State)
+                        @Html.DropDownListFor(m => m.State, // Store selected value in Model.State
+
+                                              // This argument needs some explanation - here we take a Distionary<string, string>
+                                              // and turn it into an instance of SelectList, specifying that it should use 
+                                              // 'Key' as the value of for <option> tags and 'Value' for the text
+                                              new SelectList(Model.States, "Key", "Value"),
+
+                                              "- Please select your state -", // Text for the first 'default' option
                                               new { @class = "form-control" }) @* A class name to assign to "select" tag *@
                     </div>
 
