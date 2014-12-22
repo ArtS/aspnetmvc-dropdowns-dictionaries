@@ -14,8 +14,7 @@ namespace Dropdowns.Controllers
             // Get existing user profile object from the session or create a new one
             var model = Session["UserProfileModel"] as UserProfileModel ?? new UserProfileModel();
 
-            // Create a list of SelectListItems from States so these can be rendered on the page
-            // under the drop down
+            // Simulate getting states from a database
             model.States = GetStatesFromDB();
 
             return View(model);
@@ -27,21 +26,20 @@ namespace Dropdowns.Controllers
         [HttpPost]
         public ActionResult UserProfile(UserProfileModel model)
         {
-            // Set these states on the model. We need to do this because
-            // only the value selected in the DropDownList is posted back, not the whole
-            // list of states
+            // Set States on the model. We need to do this because only the value selected 
+            // in the DropDownList is posted back, not the whole list of states
             model.States = GetStatesFromDB();
 
-            // In case everything is fine - i.e. both "FirstName" and "State" are entered/selected,
-            // redirect user to the "ViewProfile" page, and pass the user object along via Session
+            // In case everything is fine - i.e. "FirstName", "LastName" and "State" are entered/selected,
+            // redirect a user to the "ViewProfile" page, and pass the user object along via Session
             if (ModelState.IsValid)
             {
                 Session["UserProfileModel"] = model;
                 return RedirectToAction("ViewProfile");
             }
 
-            // Something is not right - so render the registration page again,
-            // keeping the data user has entered by supplying the model.
+            // Something is not right - re-render the registration page, keeping user-entered data
+            // and display validation errors
             return View(model);
         }
 
@@ -52,19 +50,21 @@ namespace Dropdowns.Controllers
         {
             // Get user profile information from the session
             var model = Session["UserProfileModel"] as UserProfileModel;
+            if (model == null)
+                return RedirectToAction("UserProfile");
 
-            // Get a description of the currently selected State
+            // Get a human-readable description of a currently selected State
             var allStates = GetStatesFromDB();
             model.StateName = allStates[model.State];
 
-            // Display ViewProfile.html page that shows FirstName, Last Name and selected State.
+            // Display View Profile page that shows FirstName, Last Name and a selected State.
             return View(model);
         }
 
         /// <summary>
         /// Simulates retrieval of country's states from a DB.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Dictionary of US states</returns>
         private Dictionary<string, string> GetStatesFromDB()
         {
             return new Dictionary<string, string>

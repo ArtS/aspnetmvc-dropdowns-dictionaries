@@ -31,12 +31,15 @@
                         @Html.DropDownListFor(m => m.State, // Store selected value in Model.State
 
                                               // This argument needs some explanation - here we take a Distionary<string, string>
-                                              // and turn it into an instance of SelectList, specifying that it should use 
-                                              // 'Key' as the value of for <option> tags and 'Value' for the text
+                                              // and turn it into an instance of SelectList, see blog post for more details
                                               new SelectList(Model.States, "Key", "Value"),
 
-                                              "- Please select your state -", // Text for the first 'default' option
-                                              new { @class = "form-control" }) @* A class name to assign to "select" tag *@
+                                              // Text for the first 'default' option
+                                              "- Please select your state -",
+                                              
+                                              // A class name to put on the "<select>"
+                                              new { @class = "form-control" }
+                                             ) 
                         @Html.ValidationMessageFor(m => m.State)
                     </div>
 
