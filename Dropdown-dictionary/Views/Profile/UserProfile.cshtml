@@ -15,12 +15,14 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.FirstName)
                         @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
                     </div>
                     
                     @* Last Name textbox *@
                     <div class="form-group">
                         @Html.LabelFor(m => m.LastName)
                         @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LastName)
                     </div>
 
                     @* State selection dropdown *@
@@ -35,6 +37,7 @@
 
                                               "- Please select your state -", // Text for the first 'default' option
                                               new { @class = "form-control" }) @* A class name to assign to "select" tag *@
+                        @Html.ValidationMessageFor(m => m.State)
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -43,3 +46,9 @@
         </div>
     </div>
 </div>
+<script>
+    (function($) {
+        $('.input-validation-error').parents('.form-group').addClass('has-error');
+        $('.field-validation-error').addClass('text-danger');
+    })(jQuery);
+</script>
