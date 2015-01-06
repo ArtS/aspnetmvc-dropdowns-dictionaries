@@ -1,6 +1,6 @@
-This is a sample project to go with the article ""
+This is a sample project to go with the article "[DropDownListFor with Dictionaries in ASP.NET MVC and why SelectList wants to kill you][1]"
 
-[1]:http://nimblegecko.com/aspnetmvc-dropdowns-with-enums/
+[1]:http://nimblegecko.com/dropdownlistfor-with-dictionaries-in-ASP-NET-MVC-and-why-SelectList-wants-to-kill-you/
 
 ###License###
 Copyright (C) 2012 Artem Skvira
