@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Dropdowns.Controllers;
 
 namespace Dropdowns.Models
 {
     public class UserProfileModel
     {
+        public SelectList list;
+
         [Required]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
@@ -25,5 +28,7 @@ namespace Dropdowns.Models
 
         // Property to store human-readable state name
         public string StateName { get; set; }
+
+        public string Country { get; set; }
     }
 }

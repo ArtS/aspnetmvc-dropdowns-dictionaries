@@ -5,6 +5,12 @@ using Dropdowns.Models;
 
 namespace Dropdowns.Controllers
 {
+    public class Country
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
     public class ProfileController : Controller
     {
         //
@@ -17,7 +23,18 @@ namespace Dropdowns.Controllers
 
             // Simulate getting states from a database
             model.States = GetStatesFromDB();
+            var list = new SelectList(model.States, "Key", "Value", "3d8ea3f7-eceb-4237-ada3-d1203e7fa882");
 
+            var countries = new Country[]
+            {
+                new Country {Id = 1, Name = "A"},
+                new Country {Id = 2, Name = "b"},
+                new Country {Id = 3, Name = "c"}
+            };
+
+            var list2 = new SelectList(countries, "Id", "Name", "3");
+            model.list = list2;
+            //model.Country = "1";
             return View(model);
         }
 
